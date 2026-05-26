@@ -1,0 +1,117 @@
+class Conv {
+    static Array ArrayFilter;
+    static int stride;
+    field Array ArrayInput;
+    field Array ArrayOutput;
+    field int ArraySize;
+
+    constructor Conv new(int N) {
+        let ArraySize = N;
+        let stride = 1;
+        return this;
+    }
+
+    method void initFilter(Array values) {
+        var int i;
+        var int temp;
+        let ArrayFilter = Array.new(9);
+        let i = 0;
+        while (i < 9) {
+            let temp = values[i];
+            let ArrayFilter[i] = temp;
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method void getArrayInput(Array input, int size) {
+        var int i;
+        var int total;
+        var int temp;
+        let ArraySize = size;
+        let total = size * size;
+        let ArrayInput = Array.new(total);
+        let i = 0;
+        while (i < total) {
+            let temp = input[i];
+            let ArrayInput[i] = temp;
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method int calcOutputDim() {
+        return ((ArraySize - 3) / stride) + 1;
+    }
+
+    method void conv2d() {
+        var int outDim;
+        var int outRow;
+        var int outCol;
+        var int fRow;
+        var int fCol;
+        var int inRow;
+        var int inCol;
+        var int sum;
+        var int outIdx;
+
+        let outDim = calcOutputDim();
+        let ArrayOutput = Array.new(outDim * outDim);
+
+        if (outDim < 1) {
+            do Output.printString("Error: input too small");
+            do Output.println();
+            return;
+        }
+
+        let outRow = 0;
+        while (outRow < outDim) {
+            let outCol = 0;
+            while (outCol < outDim) {
+                let sum = 0;
+                let fRow = 0;
+                while (fRow < 3) {
+                    let fCol = 0;
+                    while (fCol < 3) {
+                        let inRow = (outRow * stride) + fRow;
+                        let inCol = (outCol * stride) + fCol;
+                        let sum = sum + (ArrayInput[(inRow * ArraySize) + inCol] * ArrayFilter[(fRow * 3) + fCol]);
+                        let fCol = fCol + 1;
+                    }
+                    let fRow = fRow + 1;
+                }
+                let outIdx = (outRow * outDim) + outCol;
+                let ArrayOutput[outIdx] = sum;
+                let outCol = outCol + 1;
+            }
+            let outRow = outRow + 1;
+        }
+        return;
+    }
+
+    method void printOutput() {
+        var int outDim;
+        var int row;
+        var int col;
+        let outDim = calcOutputDim();
+        let row = 0;
+        while (row < outDim) {
+            let col = 0;
+            while (col < outDim) {
+                do Output.printInt(ArrayOutput[(row * outDim) + col]);
+                do Output.printChar(32);
+                let col = col + 1;
+            }
+            do Output.println();
+            let row = row + 1;
+        }
+        return;
+    }
+
+    method void dispose() {
+        do ArrayInput.dispose();
+        do ArrayOutput.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}
