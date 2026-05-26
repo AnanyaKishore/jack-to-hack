@@ -110,7 +110,7 @@ python Assembler/assembler.py out/test_1/test_1.asm
 
 ## Testing on the CPU Emulator
 
-1. Open the **CPU Emulator** from (here)[https://nand2tetris.github.io/web-ide/cpu]
+1. Open the **CPU Emulator** from [here](https://nand2tetris.github.io/web-ide/cpu)
 2. Load `out/<program>/test_1.hack` into the ROM.
 3. Run or step through the program.
 
