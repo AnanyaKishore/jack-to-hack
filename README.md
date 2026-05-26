@@ -5,8 +5,6 @@ Jack (.jack) -> Hack VM (.vm) -> Hack Assembly (.asm) -> Binary (.hack)
            Compiler        VM Translator             Assembler
 ```
 
----
-
 ## Structure
 
 ```
@@ -54,8 +52,6 @@ jack-to-hack/
         ├── ...
 ```
 
----
-
 ## Pipeline
 
 ```bash
@@ -72,8 +68,6 @@ Each program gets its own isolated output folder:
 python pipeline.py jack/test_1
 python pipeline.py jack/test_2
 ```
-
----
 
 ## Running Individual Stages
 
@@ -110,14 +104,10 @@ python Assembler/assembler.py out/test_1/test_1.asm
 
 ## Testing on the CPU Emulator
 
-1. Open the **CPU Emulator** from [here](https://nand2tetris.github.io/web-ide/cpu)
+1. Open the CPU Emulator from [NAND2Tetris' web IDE](https://nand2tetris.github.io/web-ide/cpu)
 2. Load `out/<program>/test_1.hack` into the ROM.
 3. Run or step through the program.
-
----
 
 ## Requirements
 
 - Python 3.13
-
----
